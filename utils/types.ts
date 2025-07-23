@@ -11,7 +11,7 @@ export type SubCategory = {
   serviceName: string;
   serviceDescription: string;
   serviceLink: string;
-  serviceDocument: string; // HTML content as a string
+  serviceDocument?: string; // HTML content as a string
   category: string; // ID as string, could also be number if needed
   image: string;
   file: string | null;

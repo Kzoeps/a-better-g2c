@@ -141,7 +141,6 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
               </button>
 
               {/* Subcategories */}
-              {/* Subcategories */}
               {isExpanded && (
                 <div className="bg-gray-50 border-t border-gray-100">
                   <div className="py-2">
