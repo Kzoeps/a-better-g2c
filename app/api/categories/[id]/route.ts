@@ -11,7 +11,10 @@ export async function GET(
       `https://www.citizenservices.gov.bt/g2cPortalApi/category/${params.id}`
     );
     const data = await response.json();
-    const filteredData = data.map(({ serviceLink, ...rest }: SubCategory) => rest);
+    const filteredData = data.map((subcategory: SubCategory) => {
+      delete subcategory?.serviceDocument;
+      return subcategory;
+    });
     return NextResponse.json(filteredData);
   } catch (e) {
     console.error("Error fetching categories:", e);
