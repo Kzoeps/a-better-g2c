@@ -141,7 +141,58 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
               </button>
 
               {/* Subcategories */}
+              {/* Subcategories */}
               {isExpanded && (
+                <div className="bg-gray-50 border-t border-gray-100">
+                  <div className="py-2">
+                    {isLoading
+                      ? // Skeleton loader when subcategories are loading
+                        Array.from({ length: 3 }).map((_, index) => (
+                          <div
+                            key={index}
+                            className="animate-pulse flex items-center px-4 py-3 space-x-3"
+                          >
+                            <div className="w-8 flex justify-center">
+                              <div className="w-2 h-2 bg-gray-300 rounded-full" />
+                            </div>
+                            <div className="flex-grow">
+                              <div className="h-4 bg-gray-300 rounded w-1/2 mb-1"></div>
+                              <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+                            </div>
+                            <div className="w-4 h-4 bg-gray-200 rounded"></div>
+                          </div>
+                        ))
+                      : (subcategories as SubCategory[])?.map(
+                          (subcategory, index) => (
+                            <button
+                              key={index}
+                              className="w-full px-4 py-3 text-left hover:bg-white transition-colors duration-200 group"
+                            >
+                              <div className="flex items-center">
+                                <div className="w-8 mr-3 flex justify-center">
+                                  <div className="w-2 h-2 bg-gray-300 rounded-full group-hover:bg-blue-400 transition-colors"></div>
+                                </div>
+                                <div className="flex-grow">
+                                  <div className="font-medium text-gray-900 text-sm">
+                                    {subcategory.serviceName}
+                                  </div>
+                                  <div className="text-xs text-gray-500 mt-0.5">
+                                    Tap to access service
+                                  </div>
+                                </div>
+                                <ChevronRight
+                                  size={16}
+                                  className="text-gray-300 group-hover:text-gray-400 transition-colors"
+                                />
+                              </div>
+                            </button>
+                          )
+                        )}
+                  </div>
+                </div>
+              )}
+
+              {/* {isExpanded && (
                 <div className="bg-gray-50 border-t border-gray-100">
                   <div className="py-2">
                     {(subcategories as SubCategory[])?.map(
@@ -172,7 +223,7 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
                     )}
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           );
         })}
