@@ -32,13 +32,11 @@ export default async function Home() {
         servicesResponse
     );
 
-    // const categories = await categoriesRequest.json();
     return (
         <div>
             <CategoryProvider value={mappedData}>
                 <Listing />
             </CategoryProvider>
-            {/* <Listing categories={categories} /> */}
         </div>
     );
 }
