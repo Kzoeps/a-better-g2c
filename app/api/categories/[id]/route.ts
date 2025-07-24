@@ -4,9 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: Promise<{ params: { id: string } }>
 ) {
   try {
+    const { params }= await context;
     const response = await fetch(
       `https://www.citizenservices.gov.bt/g2cPortalApi/category/${params.id}`
     );
@@ -18,6 +19,7 @@ export async function GET(
     return NextResponse.json(filteredData);
   } catch (e) {
     console.error("Error fetching categories:", e);
+    const { params } = await context
     const subcategory = subcategories.find((subcategory) => {
       return Number(subcategory.category) === Number(params.id);
     });
