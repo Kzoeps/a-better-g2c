@@ -56,7 +56,7 @@ const categoryIconMap = new Map<number, {
 ]);
 
 const AccordionNavigation = ({ categories }: ListingProps) => {
-  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const {
     data: subcategories,
@@ -67,9 +67,7 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
     fetcher
   );
 
-  console.log(subcategories);
-
-  const toggleCategory = (categoryId: any) => {
+  const toggleCategory = (categoryId: number) => {
     setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
   };
 
