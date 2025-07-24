@@ -36,7 +36,7 @@ export default async function Home() {
     return (
         <div>
             <CategoryProvider value={mappedData}>
-                <Listing categories={[]} />
+                <Listing />
             </CategoryProvider>
             {/* <Listing categories={categories} /> */}
         </div>

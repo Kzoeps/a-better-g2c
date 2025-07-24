@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import useSWR from "swr";
 import {
     Search,
     ChevronDown,
@@ -23,14 +22,8 @@ import {
     TreePine,
     Palette,
 } from "lucide-react";
-import { Category, SubCategory } from "@/utils/types";
-import { fetcher } from "@/utils/utils";
 import clsx from "clsx";
 import { useCategoryContext } from "@/providers/CategoryContext";
-
-export interface ListingProps {
-    categories: Category[];
-}
 
 const categoryIconMap = new Map<
     number,
@@ -75,20 +68,60 @@ const categoryIconMap = new Map<
     [627, { icon: Palette, color: "text-amber-600", bgColor: "bg-amber-50" }],
 ]);
 
-const AccordionNavigation = ({ categories }: ListingProps) => {
-    const val = useCategoryContext();
+const AccordionNavigation = () => {
+    const categoryMap = useCategoryContext();
     const [expandedCategory, setExpandedCategory] = useState<number | null>(
         null
     );
     const [searchQuery, setSearchQuery] = useState("");
-    const {
-        data: subcategories,
-        isLoading,
-        error,
-    } = useSWR(
-        expandedCategory ? `/api/categories/${expandedCategory}` : null,
-        fetcher
-    );
+
+    // Convert CategoryMap to array for easier iteration
+    const categories = Object.values(categoryMap);
+
+    // Filter categories and services based on search query
+    const filteredCategories = React.useMemo(() => {
+        if (!searchQuery.trim()) {
+            return categories;
+        }
+
+        const query = searchQuery.toLowerCase().trim();
+
+        return categories
+            .filter((category) => {
+                // Check if category name matches
+                const categoryMatches =
+                    category.categoryName.toLowerCase().includes(query) ||
+                    category.categoryDescription.toLowerCase().includes(query);
+
+                // Check if any service in this category matches
+                const hasMatchingServices = category.services.some(
+                    (service) =>
+                        service.serviceName.toLowerCase().includes(query) ||
+                        service.serviceDescription.toLowerCase().includes(query)
+                );
+
+                return categoryMatches || hasMatchingServices;
+            })
+            .map((category) => {
+                // If searching, filter services within each category
+                const filteredServices = category.services.filter(
+                    (service) =>
+                        service.serviceName.toLowerCase().includes(query) ||
+                        service.serviceDescription.toLowerCase().includes(query)
+                );
+
+                return {
+                    ...category,
+                    services: filteredServices,
+                    // Keep track of whether the category itself matched (for potential highlighting)
+                    categoryMatched:
+                        category.categoryName.toLowerCase().includes(query) ||
+                        category.categoryDescription
+                            .toLowerCase()
+                            .includes(query),
+                };
+            });
+    }, [categories, searchQuery]);
 
     const toggleCategory = (categoryId: number) => {
         setExpandedCategory(
@@ -104,7 +137,6 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
                     <h1 className="text-xl font-bold text-gray-900 mb-4">
                         Government Services
                     </h1>
-
                     {/* Search Bar */}
                     <div className="relative">
                         <Search
@@ -121,14 +153,14 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
                     </div>
                 </div>
             </div>
-
             {/* Accordion List */}
             <div className="divide-y divide-gray-200 bg-white">
-                {categories.map((category) => {
+                {filteredCategories.map((category) => {
                     const IconComponent = categoryIconMap.get(
                         category.id
                     )?.icon;
                     const isExpanded = expandedCategory === category.id;
+                    const services = category.services || [];
 
                     return (
                         <div
@@ -184,124 +216,82 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
                                     </div>
                                 </div>
                             </button>
-
-                            {/* Subcategories */}
+                            {/* Services (Previously Subcategories) */}
                             {isExpanded && (
                                 <div className="bg-gray-50 border-t border-gray-100">
                                     <div className="py-2">
-                                        {isLoading
-                                            ? // Skeleton loader when subcategories are loading
-                                              Array.from({ length: 3 }).map(
-                                                  (_, index) => (
-                                                      <div
-                                                          key={index}
-                                                          className="animate-pulse flex items-center px-4 py-3 space-x-3"
-                                                      >
-                                                          <div className="w-8 flex justify-center">
-                                                              <div className="w-2 h-2 bg-gray-300 rounded-full" />
-                                                          </div>
-                                                          <div className="flex-grow">
-                                                              <div className="h-4 bg-gray-300 rounded w-1/2 mb-1"></div>
-                                                              <div className="h-3 bg-gray-200 rounded w-1/3"></div>
-                                                          </div>
-                                                          <div className="w-4 h-4 bg-gray-200 rounded"></div>
-                                                      </div>
-                                                  )
-                                              )
-                                            : (
-                                                  subcategories as SubCategory[]
-                                              )?.map((subcategory, index) => (
-                                                  <button
-                                                      key={index}
-                                                      className="w-full px-4 py-3 text-left hover:bg-white transition-colors duration-200 group"
-                                                  >
-                                                      <div className="flex items-center">
-                                                          <div className="w-8 mr-3 flex justify-center">
-                                                              <div className="w-2 h-2 bg-gray-300 rounded-full group-hover:bg-blue-400 transition-colors"></div>
-                                                          </div>
-                                                          <div className="flex-grow">
-                                                              <div className="font-medium text-gray-900 text-sm">
-                                                                  {
-                                                                      subcategory.serviceName
-                                                                  }
-                                                              </div>
-                                                              <div className="text-xs text-gray-500 mt-0.5">
-                                                                  Tap to access
-                                                                  service
-                                                              </div>
-                                                          </div>
-                                                          <ChevronRight
-                                                              size={16}
-                                                              className="text-gray-300 group-hover:text-gray-400 transition-colors"
-                                                          />
-                                                      </div>
-                                                  </button>
-                                              ))}
+                                        {services.length === 0 ? (
+                                            <div className="px-4 py-6 text-center">
+                                                <p className="text-sm text-gray-500">
+                                                    {searchQuery
+                                                        ? "No matching services found"
+                                                        : "No services available"}
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            services.map((service) => (
+                                                <button
+                                                    key={service.id}
+                                                    className="w-full px-4 py-3 text-left hover:bg-white transition-colors duration-200 group"
+                                                >
+                                                    <div className="flex items-center">
+                                                        <div className="w-8 mr-3 flex justify-center">
+                                                            <div className="w-2 h-2 bg-gray-300 rounded-full group-hover:bg-blue-400 transition-colors"></div>
+                                                        </div>
+                                                        <div className="flex-grow">
+                                                            <div className="font-medium text-gray-900 text-sm">
+                                                                {
+                                                                    service.serviceName
+                                                                }
+                                                            </div>
+                                                            <div className="text-xs text-gray-500 mt-0.5">
+                                                                Tap to access
+                                                                service
+                                                            </div>
+                                                        </div>
+                                                        <ChevronRight
+                                                            size={16}
+                                                            className="text-gray-300 group-hover:text-gray-400 transition-colors"
+                                                        />
+                                                    </div>
+                                                </button>
+                                            ))
+                                        )}
                                     </div>
                                 </div>
                             )}
-
-                            {/* {isExpanded && (
-                <div className="bg-gray-50 border-t border-gray-100">
-                  <div className="py-2">
-                    {(subcategories as SubCategory[])?.map(
-                      (subcategory, index) => (
-                        <button
-                          key={index}
-                          className="w-full px-4 py-3 text-left hover:bg-white transition-colors duration-200 group"
-                        >
-                          <div className="flex items-center">
-                            <div className="w-8 mr-3 flex justify-center">
-                              <div className="w-2 h-2 bg-gray-300 rounded-full group-hover:bg-blue-400 transition-colors"></div>
-                            </div>
-                            <div className="flex-grow">
-                              <div className="font-medium text-gray-900 text-sm">
-                                {subcategory.serviceName}
-                              </div>
-                              <div className="text-xs text-gray-500 mt-0.5">
-                                Tap to access service
-                              </div>
-                            </div>
-                            <ChevronRight
-                              size={16}
-                              className="text-gray-300 group-hover:text-gray-400 transition-colors"
-                            />
-                          </div>
-                        </button>
-                      )
-                    )}
-                  </div>
-                </div>
-              )} */}
                         </div>
                     );
                 })}
             </div>
 
             {/* Results count for search */}
-            {/* {searchQuery && (
-        <div className="p-4 bg-gray-50">
-          <p className="text-sm text-gray-500 text-center">
-            {filteredCategories.length}{" "}
-            {filteredCategories.length === 1 ? "category" : "categories"} found
-          </p>
-        </div>
-      )} */}
+            {searchQuery && (
+                <div className="p-4 bg-gray-50">
+                    <p className="text-sm text-gray-500 text-center">
+                        {filteredCategories.length}{" "}
+                        {filteredCategories.length === 1
+                            ? "category"
+                            : "categories"}{" "}
+                        found
+                    </p>
+                </div>
+            )}
 
             {/* Empty state */}
-            {/* {searchQuery && filteredCategories.length === 0 && (
-        <div className="p-8 text-center">
-          <div className="text-gray-400 mb-2">
-            <Search size={48} className="mx-auto" />
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-1">
-            No services found
-          </h3>
-          <p className="text-sm text-gray-600">
-            Try searching with different keywords
-          </p>
-        </div>
-      )} */}
+            {searchQuery && filteredCategories.length === 0 && (
+                <div className="p-8 text-center">
+                    <div className="text-gray-400 mb-2">
+                        <Search size={48} className="mx-auto" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-1">
+                        No services found
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                        Try searching with different keywords
+                    </p>
+                </div>
+            )}
         </div>
     );
 };
