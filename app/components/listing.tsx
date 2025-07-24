@@ -25,29 +25,34 @@ import {
 } from "lucide-react";
 import { Category, SubCategory } from "@/utils/types";
 import { fetcher } from "@/utils/utils";
+import clsx from "clsx";
 
 export interface ListingProps {
   categories: Category[];
 }
 
-const categoryIconMap = new Map<number, React.ElementType>([
-  [479, Users],
-  [480, GraduationCap],
-  [483, Heart],
-  [484, DollarSign],
-  [485, Home],
-  [486, Shield],
-  [487, Wheat],
-  [488, Building2],
-  [489, MapPin],
-  [490, Plane],
-  [491, Scale],
-  [492, Banknote],
-  [493, Car],
-  [494, Calendar],
-  [548, CreditCard],
-  [622, TreePine],
-  [627, Palette],
+const categoryIconMap = new Map<number, {
+  icon: React.ElementType;
+  color: string;
+  bgColor: string;
+}>([
+  [479, { icon: Users, color: "text-blue-600", bgColor: "bg-blue-50" }],
+  [480, { icon: GraduationCap, color: "text-green-600", bgColor: "bg-green-50" }],
+  [483, { icon: Heart, color: "text-red-600", bgColor: "bg-red-50" }],
+  [484, { icon: DollarSign, color: "text-yellow-600", bgColor: "bg-yellow-50" }],
+  [485, { icon: Home, color: "text-orange-600", bgColor: "bg-orange-50" }],
+  [486, { icon: Shield, color: "text-gray-600", bgColor: "bg-gray-50" }],
+  [487, { icon: Wheat, color: "text-emerald-600", bgColor: "bg-emerald-50" }],
+  [488, { icon: Building2, color: "text-purple-600", bgColor: "bg-purple-50" }],
+  [489, { icon: MapPin, color: "text-teal-600", bgColor: "bg-teal-50" }],
+  [490, { icon: Plane, color: "text-sky-600", bgColor: "bg-sky-50" }],
+  [491, { icon: Scale, color: "text-indigo-600", bgColor: "bg-indigo-50" }],
+  [492, { icon: Banknote, color: "text-rose-600", bgColor: "bg-rose-50" }],
+  [493, { icon: Car, color: "text-cyan-600", bgColor: "bg-cyan-50" }],
+  [494, { icon: Calendar, color: "text-pink-600", bgColor: "bg-pink-50" }],
+  [548, { icon: CreditCard, color: "text-violet-600", bgColor: "bg-violet-50" }],
+  [622, { icon: TreePine, color: "text-lime-600", bgColor: "bg-lime-50" }],
+  [627, { icon: Palette, color: "text-amber-600", bgColor: "bg-amber-50" }],
 ]);
 
 const AccordionNavigation = ({ categories }: ListingProps) => {
@@ -97,7 +102,7 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
       {/* Accordion List */}
       <div className="divide-y divide-gray-200 bg-white">
         {categories.map((category) => {
-          const IconComponent = categoryIconMap.get(category.id);
+          const IconComponent = categoryIconMap.get(category.id)?.icon;
           const isExpanded = expandedCategory === category.id;
 
           return (
@@ -112,8 +117,8 @@ const AccordionNavigation = ({ categories }: ListingProps) => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center flex-grow min-w-0">
-                    <div className={`p-2 rounded-lg mr-3 flex-shrink-0`}>
-                      {IconComponent && <IconComponent size={20} />}
+                    <div className={clsx(`p-2 rounded-lg mr-3 flex-shrink-0`, categoryIconMap.get(category.id)?.bgColor)}>
+                      {IconComponent && <IconComponent size={20} className={clsx(categoryIconMap.get(category.id)?.color)} />}
                     </div>
                     <div className="min-w-0 flex-grow">
                       <h3 className="font-semibold text-gray-900 text-sm mb-1">

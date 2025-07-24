@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Listing from "./components/listing";
 
 export default async function Home() {
