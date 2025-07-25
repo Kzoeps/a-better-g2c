@@ -1,4 +1,4 @@
-import ServiceParserDemo, { ServiceRenderer } from "@/utils/service-parser";
+import ServiceRendererShell from "@/app/components/service-renderer-shell";
 import { Service } from "@/utils/utils";
 
 export default async function ServicePage({
@@ -8,14 +8,7 @@ export default async function ServicePage({
 }) {
     const { id } = await params;
     const servicesResponse = await fetch(
-        "https://www.citizenservices.gov.bt/g2cPortalApi/getService",
-        {
-            cache: "force-cache",
-            next: {
-                revalidate: 86400,
-                tags: ["services"],
-            },
-        }
+        "https://www.citizenservices.gov.bt/g2cPortalApi/getService"
     );
     const servicesData = await servicesResponse.json();
     const service = servicesData.find(
@@ -23,8 +16,8 @@ export default async function ServicePage({
     );
     return (
         <div>
-            <ServiceRenderer
-                serviceName={service?.serviceName || ""}
+            <ServiceRendererShell
+                serviceName={service?.name || ""}
                 htmlContent={service?.serviceDocument || ""}
             />
         </div>
