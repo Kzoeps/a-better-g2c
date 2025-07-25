@@ -18,7 +18,7 @@ type Category = {
     file: string | null;
 };
 
-type Service = {
+export type Service = {
     id: number;
     serviceName: string;
     serviceDescription: string;
