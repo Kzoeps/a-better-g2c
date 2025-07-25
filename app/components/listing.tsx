@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 import { useCategoryContext } from "@/providers/CategoryContext";
+import Link from "next/link";
 
 const categoryIconMap = new Map<
     number,
@@ -136,7 +137,8 @@ const AccordionNavigation = () => {
                         </div>
                     ) : (
                         filteredServices.map((service) => (
-                            <button
+                            <Link
+                                href={`/service/${service.id}`}
                                 key={service.id}
                                 className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 group"
                             >
@@ -154,7 +156,7 @@ const AccordionNavigation = () => {
                                         className="text-gray-300 group-hover:text-gray-400 transition-colors"
                                     />
                                 </div>
-                            </button>
+                            </Link>
                         ))
                     )
                 ) : (
@@ -234,7 +236,8 @@ const AccordionNavigation = () => {
                                                 </div>
                                             ) : (
                                                 services.map((service) => (
-                                                    <button
+                                                    <Link
+                                                        href={`/service/${service.id}`}
                                                         key={service.id}
                                                         className="w-full px-4 py-3 text-left hover:bg-white transition-colors duration-200 group"
                                                     >
@@ -259,7 +262,7 @@ const AccordionNavigation = () => {
                                                                 className="text-gray-300 group-hover:text-gray-400 transition-colors"
                                                             />
                                                         </div>
-                                                    </button>
+                                                    </Link>
                                                 ))
                                             )}
                                         </div>
