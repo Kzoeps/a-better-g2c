@@ -406,24 +406,29 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         const IconComponent = config.icon;
 
         return (
-            <div
-                key={key}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6"
-            >
-                <div className="flex items-center mb-4">
-                    <IconComponent className="h-5 w-5 text-blue-600 mr-3" />
-                    <h3 className="text-lg font-semibold text-gray-900 capitalize">
-                        {key.replace(/([A-Z])/g, " $1").trim()}
-                    </h3>
-                </div>
-
-                {sectionData.map((section, idx) => (
-                    <div key={idx} className="prose prose-sm max-w-none">
-                        <div className="whitespace-pre-line text-gray-700 leading-relaxed">
-                            {section.content}
+            <div key={key} className="border-b border-gray-100">
+                <div className="p-4">
+                    <div className="flex items-center mb-3">
+                        <div className="p-2 rounded-lg bg-gray-100 mr-3">
+                            <IconComponent className="h-5 w-5 text-gray-600" />
                         </div>
+                        <h3 className="font-semibold text-gray-900 text-md capitalize">
+                            {key.replace(/([A-Z])/g, " $1").trim()}
+                        </h3>
                     </div>
-                ))}
+                    <div className="pl-10">
+                        {sectionData.map((section, idx) => (
+                            <div
+                                key={idx}
+                                className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
+                            >
+                                <div className="whitespace-pre-line">
+                                    {section.content}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     };
@@ -433,13 +438,15 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         const displayName = serviceNameSection?.content || serviceName;
 
         return (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg p-6 mb-6">
-                <h1 className="text-2xl md:text-3xl font-bold mb-2">
-                    {displayName}
-                </h1>
-                <p className="text-blue-100">
-                    Government of Bhutan Digital Service
-                </p>
+            <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+                <div className="p-4">
+                    <h1 className="text-xl font-bold text-gray-900">
+                        {displayName}
+                    </h1>
+                    <p className="text-sm text-gray-600 mt-1">
+                        Government of Bhutan Digital Service
+                    </p>
+                </div>
             </div>
         );
     };
@@ -454,53 +461,54 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         }
 
         return (
-            <div className="bg-gray-50 rounded-lg border border-gray-200 p-6 mb-6">
-                <div className="flex items-center mb-4">
-                    <Phone className="h-5 w-5 text-green-600 mr-3" />
-                    <h3 className="text-lg font-semibold text-gray-900">
-                        Contact Information
-                    </h3>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {contactInfo.phones.length > 0 && (
-                        <div>
-                            <h4 className="font-medium text-gray-700 mb-2 flex items-center">
-                                <Phone className="h-4 w-4 mr-1" /> Phone
-                            </h4>
-                            {contactInfo.phones.map((phone, idx) => (
-                                <p key={idx} className="text-gray-600">
-                                    {phone}
-                                </p>
-                            ))}
+            <div className="border-b border-gray-100">
+                <div className="p-4">
+                    <div className="flex items-center mb-3">
+                        <div className="p-2 rounded-lg bg-gray-100 mr-3">
+                            <Phone className="h-5 w-5 text-gray-600" />
                         </div>
-                    )}
-
-                    {contactInfo.emails.length > 0 && (
-                        <div>
-                            <h4 className="font-medium text-gray-700 mb-2 flex items-center">
-                                <Mail className="h-4 w-4 mr-1" /> Email
-                            </h4>
-                            {contactInfo.emails.map((email, idx) => (
-                                <p key={idx} className="text-gray-600">
-                                    {email}
-                                </p>
-                            ))}
-                        </div>
-                    )}
-
-                    {contactInfo.addresses.length > 0 && (
-                        <div>
-                            <h4 className="font-medium text-gray-700 mb-2 flex items-center">
-                                <MapPin className="h-4 w-4 mr-1" /> Address
-                            </h4>
-                            {contactInfo.addresses.map((address, idx) => (
-                                <p key={idx} className="text-gray-600 text-sm">
-                                    {address}
-                                </p>
-                            ))}
-                        </div>
-                    )}
+                        <h3 className="font-semibold text-gray-900 text-md">
+                            Contact Information
+                        </h3>
+                    </div>
+                    <div className="pl-10 space-y-3">
+                        {contactInfo.phones.length > 0 && (
+                            <div>
+                                <h4 className="font-medium text-sm text-gray-800 mb-1">
+                                    Phone
+                                </h4>
+                                {contactInfo.phones.map((phone, idx) => (
+                                    <p key={idx} className="text-gray-600 text-sm">
+                                        {phone}
+                                    </p>
+                                ))}
+                            </div>
+                        )}
+                        {contactInfo.emails.length > 0 && (
+                            <div>
+                                <h4 className="font-medium text-sm text-gray-800 mb-1">
+                                    Email
+                                </h4>
+                                {contactInfo.emails.map((email, idx) => (
+                                    <p key={idx} className="text-gray-600 text-sm">
+                                        {email}
+                                    </p>
+                                ))}
+                            </div>
+                        )}
+                        {contactInfo.addresses.length > 0 && (
+                            <div>
+                                <h4 className="font-medium text-sm text-gray-800 mb-1">
+                                    Address
+                                </h4>
+                                {contactInfo.addresses.map((address, idx) => (
+                                    <p key={idx} className="text-gray-600 text-sm">
+                                        {address}
+                                    </p>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         );
@@ -510,25 +518,26 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         if (!links.length) return null;
 
         return (
-            <div className="bg-blue-50 rounded-lg border border-blue-200 p-6 mb-6">
-                <div className="flex items-center mb-4">
-                    <ExternalLink className="h-5 w-5 text-blue-600 mr-3" />
-                    <h3 className="text-lg font-semibold text-gray-900">
+            <div className="p-4 border-b border-gray-100">
+                <div className="flex items-center mb-3">
+                    <div className="p-2 rounded-lg bg-gray-100 mr-3">
+                        <ExternalLink className="h-5 w-5 text-gray-600" />
+                    </div>
+                    <h3 className="font-semibold text-gray-900 text-md">
                         Apply Online
                     </h3>
                 </div>
-
-                <div className="space-y-2">
+                <div className="pl-10">
                     {links.map((link, idx) => (
                         <a
                             key={idx}
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors mr-2 mb-2"
+                            className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800"
                         >
-                            <ExternalLink className="h-4 w-4 mr-2" />
                             Access Service
+                            <ExternalLink className="h-4 w-4 ml-1" />
                         </a>
                     ))}
                 </div>
@@ -536,7 +545,6 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         );
     };
 
-    // Sort sections by priority
     const sortedSections = Object.entries(sections)
         .filter(([key]) => key !== "serviceName")
         .sort(([keyA], [keyB]) => {
@@ -546,18 +554,15 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         });
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
+        <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
             {renderServiceName()}
-            {renderLinks()}
-            {renderContactCard()}
-
-            <div className="space-y-6">
+            <div className="bg-white divide-y divide-gray-200">
+                {renderLinks()}
+                {renderContactCard()}
                 {sortedSections.map(([key, sectionData]) =>
                     renderSection(key, sectionData)
                 )}
             </div>
-
-            {/* {sections.contact && renderSection("contact", sections.contact)} */}
         </div>
     );
 };
