@@ -7,9 +7,11 @@ import {
   ExternalLink,
   FileText,
   Phone,
-  Users
+  Users,
+  Eye,
+  Sparkles
 } from "lucide-react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 
 // Types for the parsed service data
 interface SectionData {
@@ -372,12 +374,17 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
     htmlContent,
     serviceName = "Government Service",
 }) => {
+    const [showOriginal, setShowOriginal] = useState(false);
     const parser = useMemo(() => new ServiceParser(), []);
 
     const parsedData = useMemo(() => {
         if (!htmlContent) return null;
         return parser.parse(htmlContent);
     }, [htmlContent, parser]);
+
+    const toggleOriginal = () => {
+        setShowOriginal(!showOriginal);
+    };
 
     if (!parsedData) {
         return (
@@ -438,12 +445,32 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         return (
             <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
                 <div className="p-4">
-                    <h1 className="text-xl font-bold text-gray-900">
-                        {displayName}
-                    </h1>
-                    <p className="text-sm text-gray-600 mt-1">
-                        Government of Bhutan Digital Service
-                    </p>
+                    <div className="flex items-center flex-shrink-0 justify-between">
+                        <div>
+                            <h1 className="text-xl font-bold text-gray-900">
+                                {displayName}
+                            </h1>
+                            <p className="text-sm text-gray-600 mt-1">
+                                Government of Bhutan Digital Service
+                            </p>
+                        </div>
+                        <button
+                            onClick={toggleOriginal}
+                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            {showOriginal ? (
+                                <>
+                                    <Sparkles className="h-4 w-4 mr-2" />
+                                    Beautify
+                                </>
+                            ) : (
+                                <>
+                                    <Eye className="h-4 w-4 mr-2" />
+                                    Original
+                                </>
+                            )}
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -551,6 +578,19 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
             return priorityA - priorityB;
         });
 
+    // If showing original, render the raw HTML content
+    if (showOriginal) {
+        return (
+            <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
+                {renderServiceName()}
+                <div className="p-6">
+                    <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                </div>
+            </div>
+        );
+    }
+
+    // Otherwise render the parsed/beautified version
     return (
         <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
             {renderServiceName()}
@@ -567,4 +607,3 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
 
 export { ServiceParser, ServiceRenderer };
 export type { ContactInfo, ParsedServiceData, SectionData };
-
