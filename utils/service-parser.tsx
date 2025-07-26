@@ -1,17 +1,15 @@
 "use client";
-import React, { useState, useMemo } from "react";
 import {
-    ExternalLink,
-    Phone,
-    Mail,
-    MapPin,
-    DollarSign,
-    FileText,
-    CheckCircle,
-    Users,
-    Clock,
-    AlertCircle,
+  AlertCircle,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  ExternalLink,
+  FileText,
+  Phone,
+  Users
 } from "lucide-react";
+import React, { useMemo } from "react";
 
 // Types for the parsed service data
 interface SectionData {
@@ -567,61 +565,6 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
     );
 };
 
-// Demo Component with sample data
-// const ServiceParserDemo: React.FC = () => {
-//     const [htmlInput, setHtmlInput] = useState<string>("");
-
-//     // Sample HTML from the original example
-//     const sampleHtml = `<p><span style="letter-spacing: 0.0178571em; text-align: var(--bs-body-text-align);"><b style=""><font face="Times New Roman" style="" size="4" color="#000000">SERVICE NAME:</font><font size="4" face="Times New Roman"><span style="color: var(--bs-modal-color); background-color: rgb(0, 141, 201);"> </span><span style="background-color: rgb(0, 141, 201);"><font color="#ffffff" style="">Apply for English Proficiency Language Certificate</font></span></font></b></span></p><p><b><font size="3" face="Times New Roman" color="#0a0000">BRIEF DESCRIPTION:</font></b></p><p></p><ol><li><font face="Times New Roman"><font size="3">&nbsp;<font color="#050000">Language Proficiency Certificate :</font></font><font color="#050000">&nbsp;</font></font></li></ol><font face="Times New Roman" color="#050000"><font style="background-color: transparent; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align); letter-spacing: 0.0178571em;"><ul><li><font style="background-color: transparent; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align); letter-spacing: 0.0178571em;">&nbsp;</font><span style="background-color: transparent; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align); letter-spacing: 0.0178571em;"><font size="3">English Language Proficiency Certificate is issued to those students who have successfully completed their class X or XII from schools affiliated with BCSEA or any other board recognised by the BCSEA.</font></span></li></ul></font><font size="3"><b>REQUIRED DOCUMENT(CHECKLIST):</b></font></font><p></p><ol><li><font face="Times New Roman" size="3" color="#050000">Personal Details</font></li><li><font face="Times New Roman" size="3" color="#050000">Student Detail and Document Selection</font></li><li><font face="Times New Roman" size="3" color="#050000">Other information</font></li></ol><font size="3" face="Times New Roman" color="#050000"><b>Service you can avail from:</b></font><p><font face="Times New Roman" size="3" color="#050000"><a href="https://www.citizenservices.gov.bt/Bcsea/public/index" target="_blank">https://www.citizenservices.gov.bt/Bcsea/public/index</a><br></font></p><p><font face="Times New Roman" size="3" color="#050000"><b style="background-color: transparent; text-align: var(--bs-body-text-align); letter-spacing: 0.0178571em;">CONTACT INFORMATION:</b><br></font></p><p><font face="Times New Roman" style="background-color: rgb(255, 255, 255);" color="#050000"><font size="3"><span style="letter-spacing: normal;">Bhutan Council for School Examinations and Assessment</span><br><span style="letter-spacing: normal;">Kawajangsa, Thimphu</span></font><br><span style="letter-spacing: normal;"><font size="3" style="">Post Box No. 156</font></span></font></p><p><font face="Times New Roman" color="#050000"><font size="3">Phone: 975-02-322347</font></p><p><font face="Times New Roman" color="#050000">Email: info@bcsea.gov.bt</font></p>`;
-
-//     return (
-//         <div className="min-h-screen bg-gray-100">
-//             <div className="container mx-auto p-6">
-//                 <div className="mb-8">
-//                     <h1 className="text-3xl font-bold text-gray-900 mb-4">
-//                         Service Parser Demo
-//                     </h1>
-
-//                     <div className="bg-white rounded-lg shadow p-6 mb-6">
-//                         <h2 className="text-xl font-semibold mb-4">
-//                             Test with HTML Input
-//                         </h2>
-
-//                         <textarea
-//                             value={htmlInput}
-//                             onChange={(e) => setHtmlInput(e.target.value)}
-//                             placeholder="Paste your service HTML here..."
-//                             className="w-full h-32 p-3 border border-gray-300 rounded-md resize-none"
-//                         />
-
-//                         <div className="mt-4 flex gap-4">
-//                             <button
-//                                 onClick={() => setHtmlInput(sampleHtml)}
-//                                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-//                             >
-//                                 Load Sample Data
-//                             </button>
-//                             <button
-//                                 onClick={() => setHtmlInput("")}
-//                                 className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
-//                             >
-//                                 Clear
-//                             </button>
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 {htmlInput && (
-//                     <ServiceRenderer
-//                         htmlContent={htmlInput}
-//                         serviceName="Test Service"
-//                     />
-//                 )}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default ServiceParserDemo;
 export { ServiceParser, ServiceRenderer };
-export type { ParsedServiceData, ContactInfo, SectionData };
+export type { ContactInfo, ParsedServiceData, SectionData };
+
