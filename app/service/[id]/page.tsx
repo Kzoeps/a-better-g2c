@@ -18,7 +18,7 @@ export default async function ServicePage({
     );
     return (
         <div className="flex flex-col">
-            <div className="bg-gray-500 text-white sticky top-0 z-20">
+            <nav className="bg-gray-500 text-white sticky top-0 z-20">
                 <div className="p-4">
                     <div className="flex items-center">
                         <Link
@@ -32,7 +32,8 @@ export default async function ServicePage({
                         </Link>
                     </div>
                 </div>
-            </div>
+            </nav>
+
             <ServiceRendererShell
                 serviceName={service?.name || ""}
                 htmlContent={service?.serviceDocument || ""}

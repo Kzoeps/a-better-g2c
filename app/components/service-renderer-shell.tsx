@@ -16,11 +16,13 @@ export default function ServiceRendererShell({
     htmlContent: string;
 }) {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <ServiceRenderer
-                serviceName={serviceName || ""}
-                htmlContent={htmlContent || ""}
-            />
-        </Suspense>
+        <div className="flex flex-col">
+            <Suspense fallback={<div>Loading...</div>}>
+                <ServiceRenderer
+                    serviceName={serviceName || ""}
+                    htmlContent={htmlContent || ""}
+                />
+            </Suspense>
+        </div>
     );
 }

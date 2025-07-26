@@ -13,6 +13,7 @@ import {
     ArrowLeft,
     Grid3X3,
 } from "lucide-react";
+import Link from "next/link";
 import React, { useMemo, useState } from "react";
 
 // Types for the parsed service data
@@ -618,6 +619,32 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         return (
             <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
                 {renderServiceName()}
+                {true && (
+                    <Link
+                        href={"/"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                    >
+                        <div className="p-4 hover:bg-gray-100 transition rounded-md border-b border-gray-100 cursor-pointer">
+                            <div className="flex items-center">
+                                <div className="p-2 rounded-lg bg-gray-100 mr-3">
+                                    <ExternalLink className="h-5 w-5 text-gray-600" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <h3 className="text-md font-semibold text-gray-900">
+                                        Access Service
+                                    </h3>
+                                    <span className="text-sm text-blue-600 hover:underline inline-flex items-center">
+                                        Go to Service
+                                        <ExternalLink className="h-4 w-4 ml-1" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                )}
+                <Link href={"/"}>Go to service</Link>
                 <div className="p-6">
                     <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
                 </div>
@@ -629,6 +656,32 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
     return (
         <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
             {renderServiceName()}
+            {true && (
+                <Link
+                    href={"/"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                >
+                    <div className="p-4 hover:bg-gray-100 transition rounded-md border-b border-gray-100 cursor-pointer">
+                        <div className="flex items-center">
+                            <div className="p-2 rounded-lg bg-gray-100 mr-3">
+                                <ExternalLink className="h-5 w-5 text-gray-600" />
+                            </div>
+                            <div className="flex flex-col">
+                                <h3 className="text-md font-semibold text-gray-900">
+                                    Access Service
+                                </h3>
+                                <span className="text-sm text-blue-600 hover:underline inline-flex items-center">
+                                    Go to Service
+                                    <ExternalLink className="h-4 w-4 ml-1" />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </Link>
+            )}
+
             <div className="bg-white divide-y divide-gray-200">
                 {renderLinks()}
                 {renderContactCard()}
