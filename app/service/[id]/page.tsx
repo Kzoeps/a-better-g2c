@@ -1,7 +1,9 @@
 import ServiceRendererShell from "@/app/components/service-renderer-shell";
+import ServiceRendererSkeleton from "@/app/components/service-renderer-skeleton";
 import { Service } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function ServicePage({
     params,
@@ -34,11 +36,13 @@ export default async function ServicePage({
                 </div>
             </nav>
 
-            <ServiceRendererShell
-                serviceLink={service?.serviceLink || ""}
-                serviceName={service?.serviceName || ""}
-                htmlContent={service?.serviceDocument || ""}
-            />
+            <Suspense fallback={<ServiceRendererSkeleton />}>
+                <ServiceRendererShell
+                    serviceLink={service?.serviceLink || ""}
+                    serviceName={service?.serviceName || ""}
+                    htmlContent={service?.serviceDocument || ""}
+                />
+            </Suspense>
         </div>
     );
 }
