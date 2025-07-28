@@ -5,13 +5,11 @@ import {
     Clock,
     DollarSign,
     ExternalLink,
+    Eye,
     FileText,
     Phone,
-    Users,
-    Eye,
     Sparkles,
-    ArrowLeft,
-    Grid3X3,
+    Users
 } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
@@ -658,3 +656,4 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
 
 export { ServiceParser, ServiceRenderer };
 export type { ContactInfo, ParsedServiceData, SectionData };
+
