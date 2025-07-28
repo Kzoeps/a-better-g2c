@@ -25,7 +25,7 @@ export type Service = {
 };
 
 export type CategoryWithServices = Category & {
-    services: Service[];
+    services: Omit<Service, "serviceDocument">[];
 };
 
 // === Context ===

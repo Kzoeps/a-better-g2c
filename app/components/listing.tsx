@@ -4,8 +4,7 @@ import { Search } from "lucide-react";
 import React, { useState } from "react";
 import { CategoryCard } from "./category-card";
 import {
-    FilteredServiceCard,
-    ListingServiceCard,
+    ListingServiceCard
 } from "./listing-service-card";
 
 const AccordionNavigation = () => {

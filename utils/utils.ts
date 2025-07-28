@@ -1,15 +1,3 @@
-/**
- * A generic fetcher function that wraps the Fetch API
- * @param args Arguments to be passed to fetch
- * @returns Promise resolving to the response body as JSON
- */
-export const fetcher = async (
-    ...args: Parameters<typeof fetch>
-): Promise<any> => {
-    const response = await fetch(...args);
-    return response.json();
-};
-
 type Category = {
     id: number;
     categoryName: string;
@@ -30,12 +18,14 @@ export type Service = {
 };
 
 type CategoryWithServices = Category & {
-    services: Service[];
+    services: Omit<Service, "serviceDocument">[];
 };
 
 export function mapCategoriesWithServices(
     categories: Category[],
-    services: Service[]
+    services: (Omit<Service, "serviceDocument"> & {
+        serviceDocument?: string;
+    })[]
 ): Record<number, CategoryWithServices> {
     const categoryMap: Record<number, CategoryWithServices> = {};
 
@@ -48,8 +38,10 @@ export function mapCategoriesWithServices(
 
     for (const service of services) {
         const categoryId = parseInt(service.category);
+        const filteredService = { ...service };
+        delete filteredService["serviceDocument"];
         if (categoryMap[categoryId]) {
-            categoryMap[categoryId].services.push(service);
+            categoryMap[categoryId].services.push(filteredService);
         }
     }
 
