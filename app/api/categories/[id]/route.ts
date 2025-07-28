@@ -3,33 +3,33 @@ import { SubCategory } from "@/utils/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  req: NextRequest,
-  context: Promise<{ params: { id: string } }>
+    req: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
 ) {
-  try {
-    const { params }= await context;
-    const response = await fetch(
-      `https://www.citizenservices.gov.bt/g2cPortalApi/category/${params.id}`
-    );
-    const data = await response.json();
-    const filteredData = data.map((subcategory: SubCategory) => {
-      delete subcategory?.serviceDocument;
-      return subcategory;
-    });
-    return NextResponse.json(filteredData);
-  } catch (e) {
-    console.error("Error fetching categories:", e);
-    const { params } = await context
-    const subcategory = subcategories.find((subcategory) => {
-      return Number(subcategory.category) === Number(params.id);
-    });
-    if (subcategory) {
-      return NextResponse.json(subcategory);
-    } else {
-      return NextResponse.json(
-        { error: "Subcategory not found" },
-        { status: 404 }
-      );
+    try {
+        const parameters = await params;
+        const response = await fetch(
+            `https://www.citizenservices.gov.bt/g2cPortalApi/category/${parameters.id}`
+        );
+        const data = await response.json();
+        const filteredData = data.map((subcategory: SubCategory) => {
+            delete subcategory?.serviceDocument;
+            return subcategory;
+        });
+        return NextResponse.json(filteredData);
+    } catch (e) {
+        console.error("Error fetching categories:", e);
+        const parameters = await params;
+        const subcategory = subcategories.find((subcategory) => {
+            return Number(subcategory.category) === Number(parameters.id);
+        });
+        if (subcategory) {
+            return NextResponse.json(subcategory);
+        } else {
+            return NextResponse.json(
+                { error: "Subcategory not found" },
+                { status: 404 }
+            );
+        }
     }
-  }
 }

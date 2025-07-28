@@ -14,14 +14,7 @@ export default async function Home() {
         }
     );
     const servicesRequest = fetch(
-        "https://www.citizenservices.gov.bt/g2cPortalApi/getService",
-        {
-            cache: "force-cache",
-            next: {
-                revalidate: 86400,
-                tags: ["services"],
-            },
-        }
+        "https://www.citizenservices.gov.bt/g2cPortalApi/getService"
     );
 
     const allPromises = await Promise.all([categoriesRequest, servicesRequest]);
