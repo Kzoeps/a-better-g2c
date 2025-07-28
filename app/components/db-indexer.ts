@@ -7,15 +7,14 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 export const DBIndexer = () => {
-    const { data, error } = useSWR(
-        "http://localhost:3000/api/services",
-        fetcher
-    );
+    const { data, error } = useSWR(`/api/services`, fetcher);
 
     useEffect(() => {
         if (data) {
             Object.entries(data).forEach(([key, value]) => {
-                saveServicesToCache(key, value as Service);
+                saveServicesToCache(key, value as Service).then(() => {
+                    console.log(`saved service with id: ${key} to db`);
+                });
             });
         }
     }, [data]);

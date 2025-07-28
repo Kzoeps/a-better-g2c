@@ -23,7 +23,7 @@ export default function ServiceRendererShell({ id }: { id: string }) {
     );
     const { data: dataFromApi, isLoading: fetchingFromAPI } =
         useSWR<Service | null>(
-            `http://localhost:3000/api/services/${id}`,
+            `/api/services/${id}`,
             fetcher
         );
 

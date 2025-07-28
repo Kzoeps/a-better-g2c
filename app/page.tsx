@@ -15,6 +15,7 @@ export default async function Home() {
         mappedData = mapCategoriesWithServices(CATEGORIES, SERVICES);
     }
 
+
     return (
         <div>
             <CategoryProvider value={mappedData}>
