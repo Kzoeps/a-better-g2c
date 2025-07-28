@@ -1,6 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import ServiceRendererSkeleton from "./service-renderer-skeleton";
 
 const ServiceRenderer = dynamic(
     () => import("../components/service-renderer"),
@@ -19,7 +20,7 @@ export default function ServiceRendererShell({
 }) {
     return (
         <div className="flex flex-col">
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<ServiceRendererSkeleton />}>
                 <ServiceRenderer
                     serviceName={serviceName || ""}
                     serviceLink={serviceLink || ""}

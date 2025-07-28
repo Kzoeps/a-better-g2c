@@ -3,9 +3,7 @@ import { useCategoryContext } from "@/providers/CategoryContext";
 import { Search } from "lucide-react";
 import React, { useState } from "react";
 import { CategoryCard } from "./category-card";
-import {
-    ListingServiceCard
-} from "./listing-service-card";
+import { ListingServiceCard } from "./listing-service-card";
 
 const AccordionNavigation = () => {
     const categoryMap = useCategoryContext();
