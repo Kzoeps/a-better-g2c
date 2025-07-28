@@ -466,8 +466,7 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
     };
 
     const renderServiceName = (): React.ReactNode => {
-        const serviceNameSection = sections.serviceName?.[0];
-        const displayName = serviceNameSection?.content || serviceName;
+        const displayName = serviceName;
 
         return (
             <div className="bg-white shadow-sm border-b border-gray-200 sticky top-16 z-10">

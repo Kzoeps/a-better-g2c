@@ -13,9 +13,10 @@ export default async function ServicePage({
         "https://www.citizenservices.gov.bt/g2cPortalApi/getService"
     );
     const servicesData = await servicesResponse.json();
-    const service = servicesData.find(
+    const service: Service | undefined = servicesData.find(
         (service: Service) => Number(service.id) === Number(id)
     );
+    console.log(service)
     return (
         <div className="flex flex-col">
             <nav className="bg-gray-500 text-white sticky top-0 z-20">
@@ -35,7 +36,7 @@ export default async function ServicePage({
             </nav>
 
             <ServiceRendererShell
-                serviceName={service?.name || ""}
+                serviceName={service?.serviceName || ""}
                 htmlContent={service?.serviceDocument || ""}
             />
         </div>
