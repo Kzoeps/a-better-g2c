@@ -8,11 +8,11 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const mappedData = await getCategoriesWithServices();
+        const mappedData = await getCategoriesWithServices(false);
         return NextResponse.json(mappedData);
     } catch (error) {
         console.error("Error fetching categories:", error);
-        const mappedData = mapCategoriesWithServices(CATEGORIES, SERVICES);
+        const mappedData = mapCategoriesWithServices(CATEGORIES, SERVICES, false);
         return NextResponse.json(mappedData);
     }
 }

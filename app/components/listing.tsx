@@ -1,11 +1,12 @@
 "use client";
 import { useCategoryContext } from "@/providers/CategoryContext";
 import { Search } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { CategoryCard } from "./category-card";
 import { ListingServiceCard } from "./listing-service-card";
-import useSWR from "swr";
-import { fetcher } from "@/utils/utils";
+import dynamic from "next/dynamic";
+
+const DBIndexer = dynamic(() => import("./db-indexer"), { ssr: false });
 
 const AccordionNavigation = () => {
     const categoryMap = useCategoryContext();
@@ -14,10 +15,6 @@ const AccordionNavigation = () => {
     );
     const [searchQuery, setSearchQuery] = useState("");
     const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
-    const { data, error, isLoading } = useSWR(
-        "http://localhost:3000/api/categories",
-        fetcher
-    );
 
     const categories = Object.values(categoryMap);
 
@@ -45,10 +42,6 @@ const AccordionNavigation = () => {
             expandedCategory === categoryId ? null : categoryId
         );
     };
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
     return (
         <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
@@ -113,6 +106,9 @@ const AccordionNavigation = () => {
                     })
                 )}
             </div>
+            <Suspense fallback={"loading..."}>
+                <DBIndexer />
+            </Suspense>
         </div>
     );
 };
