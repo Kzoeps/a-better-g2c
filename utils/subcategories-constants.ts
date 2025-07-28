@@ -1,6 +1,6 @@
 import { SubCategory } from "./types";
 
-export const subcategories: SubCategory[] = [
+export const SERVICES: SubCategory[] = [
   {
     id: 33,
     serviceName: "Birth Registration Process",

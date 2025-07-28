@@ -1,4 +1,4 @@
-import { subcategories } from "@/utils/subcategories-constants";
+import { SERVICES } from "@/utils/subcategories-constants";
 import { SubCategory } from "@/utils/types";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -20,7 +20,7 @@ export async function GET(
     } catch (e) {
         console.error("Error fetching categories:", e);
         const parameters = await params;
-        const subcategory = subcategories.find((subcategory) => {
+        const subcategory = SERVICES.find((subcategory) => {
             return Number(subcategory.category) === Number(parameters.id);
         });
         if (subcategory) {
