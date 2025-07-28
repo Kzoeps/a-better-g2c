@@ -1,29 +1,6 @@
-type Category = {
-    id: number;
-    categoryName: string;
-    categoryDescription: string;
-    image: string;
-    file: string | null;
-};
+import { Category, CategoryWithServices, Service } from "./types";
 
-export type Service = {
-    id: number;
-    serviceName: string;
-    serviceDescription: string;
-    serviceLink: string;
-    serviceDocument: string;
-    category: string; // assuming this is a string like "479"
-    image: string;
-    file: string | null;
-};
-
-export type ServiceWithoutServiceDocument = Omit<Service, "serviceDocument"> & {
-    serviceDocument?: string;
-};
-
-type CategoryWithServices = Category & {
-    services: Omit<Service, "serviceDocument">[];
-};
+export const fetcher = (...args: [input: RequestInfo, init?: RequestInit]) => fetch(...args).then(res => res.json())
 
 export async function getCategoriesWithServices() {
     const categoriesRequest = fetch(

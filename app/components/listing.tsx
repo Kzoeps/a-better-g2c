@@ -4,6 +4,8 @@ import { Search } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { CategoryCard } from "./category-card";
 import { ListingServiceCard } from "./listing-service-card";
+import useSWR from "swr";
+import { fetcher } from "@/utils/utils";
 
 const AccordionNavigation = () => {
     const categoryMap = useCategoryContext();
@@ -12,13 +14,17 @@ const AccordionNavigation = () => {
     );
     const [searchQuery, setSearchQuery] = useState("");
     const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+    const { data, error, isLoading } = useSWR(
+        "http://localhost:3000/api/categories",
+        fetcher
+    );
 
     const categories = Object.values(categoryMap);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedSearchQuery(searchQuery);
-        }, 250); 
+        }, 250);
 
         return () => clearTimeout(timer);
     }, [searchQuery]);
@@ -39,6 +45,10 @@ const AccordionNavigation = () => {
             expandedCategory === categoryId ? null : categoryId
         );
     };
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
 
     return (
         <div className="max-w-md mx-auto bg-gray-50 min-h-screen">

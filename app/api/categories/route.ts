@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const mappedData = getCategoriesWithServices();
+        const mappedData = await getCategoriesWithServices();
         return NextResponse.json(mappedData);
     } catch (error) {
         console.error("Error fetching categories:", error);

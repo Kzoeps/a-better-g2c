@@ -1,32 +1,8 @@
 // context/CategoryContext.tsx
 "use client";
 
+import { CategoryWithServices } from "@/utils/types";
 import React, { createContext, useContext, ReactNode } from "react";
-
-// === Types ===
-
-export type Category = {
-    id: number;
-    categoryName: string;
-    categoryDescription: string;
-    image: string;
-    file: string | null;
-};
-
-export type Service = {
-    id: number;
-    serviceName: string;
-    serviceDescription: string;
-    serviceLink: string;
-    serviceDocument: string;
-    category: string;
-    image: string;
-    file: string | null;
-};
-
-export type CategoryWithServices = Category & {
-    services: Omit<Service, "serviceDocument">[];
-};
 
 // === Context ===
 
