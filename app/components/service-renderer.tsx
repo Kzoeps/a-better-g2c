@@ -266,7 +266,6 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
             <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
                 {renderServiceName()}
                 {renderAccessService(serviceLink)}
-                <Link href={"/"}>Go to service</Link>
                 <div className="p-6">
                     <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
                 </div>
