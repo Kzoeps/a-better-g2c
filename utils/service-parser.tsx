@@ -445,28 +445,6 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         );
     };
 
-    const renderTopNavigation = (): React.ReactNode => {
-        return (
-            <div className="bg-blue-600 text-white sticky top-0 z-20">
-                <div className="p-4">
-                    <div className="flex items-center">
-                        <button
-                            onClick={onGoBack}
-                            className="inline-flex items-center text-white hover:text-blue-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 rounded-md p-1 mr-3"
-                        >
-                            <ArrowLeft className="h-5 w-5 mr-1" />
-                            <span className="text-sm font-medium">Back</span>
-                        </button>
-                        <div className="flex items-center text-blue-100">
-                            <Grid3X3 className="h-4 w-4 mr-2" />
-                            <span className="text-sm">Service Categories</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
     const renderServiceName = (): React.ReactNode => {
         const displayName = serviceName;
 
