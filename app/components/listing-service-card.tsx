@@ -1,8 +1,8 @@
-import { Service } from "@/utils/utils";
+import { Service, ServiceWithoutServiceDocument } from "@/utils/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-export const ListingServiceCard = ({ service }: { service: Service }) => {
+export const ListingServiceCard = ({ service }: { service: ServiceWithoutServiceDocument }) => {
     return (
         <Link
             href={`/service/${service.id}`}
