@@ -25,6 +25,31 @@ type CategoryWithServices = Category & {
     services: Omit<Service, "serviceDocument">[];
 };
 
+export async function getCategoriesWithServices() {
+    const categoriesRequest = fetch(
+        "https://www.citizenservices.gov.bt/g2cPortalApi/getCategory",
+        {
+            cache: "force-cache",
+            next: {
+                revalidate: 86400,
+                tags: ["categories"],
+            },
+        }
+    );
+    const servicesRequest = fetch(
+        "https://www.citizenservices.gov.bt/g2cPortalApi/getService"
+    );
+
+    const allPromises = await Promise.all([categoriesRequest, servicesRequest]);
+    const categoriesResponse = await allPromises[0].json();
+    const servicesResponse = await allPromises[1].json();
+    const mappedData = mapCategoriesWithServices(
+        categoriesResponse,
+        servicesResponse
+    );
+    return mappedData;
+}
+
 export function mapCategoriesWithServices(
     categories: Category[],
     services: (Omit<Service, "serviceDocument"> & {

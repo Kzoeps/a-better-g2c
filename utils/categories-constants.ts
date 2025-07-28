@@ -1,6 +1,24 @@
-import { Users, GraduationCap, Heart, DollarSign, Home, Shield, Wheat, Building2, MapPin, Plane, Scale, Banknote, Car, Calendar, CreditCard, TreePine, Palette } from "lucide-react";
+import {
+    Users,
+    GraduationCap,
+    Heart,
+    DollarSign,
+    Home,
+    Shield,
+    Wheat,
+    Building2,
+    MapPin,
+    Plane,
+    Scale,
+    Banknote,
+    Car,
+    Calendar,
+    CreditCard,
+    TreePine,
+    Palette,
+} from "lucide-react";
 
-export const categories = [
+export const CATEGORIES = [
     {
         id: 479,
         categoryName: "Family",
