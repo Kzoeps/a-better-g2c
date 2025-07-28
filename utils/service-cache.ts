@@ -1,6 +1,6 @@
 // utils/serviceCache.ts
 import { openDB } from "idb";
-import { CategoryWithServices, Service } from "./types";
+import { Service } from "./types";
 
 const DB_NAME = "services-cache";
 const STORE_NAME = "categories-services";
@@ -15,7 +15,7 @@ const dbPromise = openDB(DB_NAME, 1, {
 
 export async function saveServicesToCache(
     serviceId: string,
-    services: Service[]
+    services: Service
 ) {
     const db = await dbPromise;
     await db.put(STORE_NAME, services, serviceId);

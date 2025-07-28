@@ -1,11 +1,14 @@
 "use client";
-import { getServiceFromCache } from "@/utils/service-cache";
-import { CategoryWithServices, Service } from "@/utils/types";
+import {
+    getServiceFromCache,
+    saveServicesToCache,
+} from "@/utils/service-cache";
+import { Service } from "@/utils/types";
+import { fetcher } from "@/utils/utils";
 import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState } from "react";
-import ServiceRendererSkeleton from "./service-renderer-skeleton";
 import useSWR from "swr";
-import { fetcher } from "@/utils/utils";
+import ServiceRendererSkeleton from "./service-renderer-skeleton";
 
 const ServiceRenderer = dynamic(
     () => import("../components/service-renderer"),
@@ -27,8 +30,9 @@ export default function ServiceRendererShell({ id }: { id: string }) {
     useEffect(() => {
         if (!serviceData && dataFromApi) {
             setServiceData(dataFromApi);
+            saveServicesToCache(id, dataFromApi);
         }
-    }, [serviceData, dataFromApi, fetchingFromAPI]);
+    }, [serviceData, dataFromApi, fetchingFromAPI, id]);
 
     useEffect(() => {
         const getDocumentData = async () => {

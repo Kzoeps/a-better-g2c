@@ -15,7 +15,7 @@ export const DBIndexer = () => {
     useEffect(() => {
         if (data) {
             Object.entries(data).forEach(([key, value]) => {
-                saveServicesToCache(key, value as Service[]);
+                saveServicesToCache(key, value as Service);
             });
         }
     }, [data]);
