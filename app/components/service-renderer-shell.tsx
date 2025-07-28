@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
 const ServiceRenderer = dynamic(
-    () => import("@/utils/service-parser").then((mod) => mod.ServiceRenderer),
+    () => import("../components/service-renderer"),
     {
         ssr: false,
     }
