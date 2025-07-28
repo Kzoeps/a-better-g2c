@@ -1,7 +1,7 @@
 "use client";
 import { useCategoryContext } from "@/providers/CategoryContext";
 import { Search } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CategoryCard } from "./category-card";
 import { ListingServiceCard } from "./listing-service-card";
 
@@ -11,11 +11,20 @@ const AccordionNavigation = () => {
         null
     );
     const [searchQuery, setSearchQuery] = useState("");
+    const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
 
     const categories = Object.values(categoryMap);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearchQuery(searchQuery);
+        }, 250); 
+
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
     const filteredServices = React.useMemo(() => {
-        const query = searchQuery.toLowerCase().trim();
+        const query = debouncedSearchQuery.toLowerCase().trim();
         if (!query) return [];
 
         return categories.flatMap((category) =>
@@ -23,7 +32,7 @@ const AccordionNavigation = () => {
                 service.serviceName.toLowerCase().includes(query)
             )
         );
-    }, [categories, searchQuery]);
+    }, [categories, debouncedSearchQuery]);
 
     const toggleCategory = (categoryId: number) => {
         setExpandedCategory(
@@ -58,7 +67,7 @@ const AccordionNavigation = () => {
 
             {/* Content */}
             <div className="divide-y divide-gray-200 bg-white">
-                {searchQuery ? (
+                {debouncedSearchQuery ? (
                     filteredServices.length === 0 ? (
                         <div className="p-8 text-center">
                             <div className="text-gray-400 mb-2">
