@@ -9,7 +9,7 @@ export default function ListingLoading() {
             <ServicesHeaderSkeleton />
 
             <div className="divide-y divide-gray-200 bg-white">
-                {Array.from({ length: 5 }).map((_, index) => (
+                {Array.from({ length: 13 }).map((_, index) => (
                     <CategoryCardSkeleton key={index} />
                 ))}
             </div>
