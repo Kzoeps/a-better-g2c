@@ -1,23 +1,20 @@
-import ServiceRendererShell from "@/app/components/service-renderer-shell";
+"use client";
 import ServiceRendererSkeleton from "@/app/components/service-renderer-skeleton";
-import { Service } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Suspense } from "react";
 
-export default async function ServicePage({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) {
-    const { id } = await params;
-    const servicesResponse = await fetch(
-        "https://www.citizenservices.gov.bt/g2cPortalApi/getService"
-    );
-    const servicesData = await servicesResponse.json();
-    const service: Service | undefined = servicesData.find(
-        (service: Service) => Number(service.id) === Number(id)
-    );
+const ServiceRendererShell = dynamic(
+    () => import("@/app/components/service-renderer-shell"),
+    {
+        ssr: false,
+    }
+);
+
+export default function ServicePage() {
+    const { id } = useParams<{ id: string }>();
     return (
         <div className="flex flex-col">
             <nav className="bg-gray-500 text-white sticky top-0 z-20">
@@ -37,11 +34,7 @@ export default async function ServicePage({
             </nav>
 
             <Suspense fallback={<ServiceRendererSkeleton />}>
-                <ServiceRendererShell
-                    serviceLink={service?.serviceLink || ""}
-                    serviceName={service?.serviceName || ""}
-                    htmlContent={service?.serviceDocument || ""}
-                />
+                <ServiceRendererShell id={id} />
             </Suspense>
         </div>
     );

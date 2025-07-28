@@ -1,23 +1,21 @@
 "use client";
 
-import {
-    saveDocumentToCache,
-} from "@/utils/service-cache";
-import { CategoryWithServices } from "@/utils/types";
+import { saveServicesToCache } from "@/utils/service-cache";
+import { Service } from "@/utils/types";
 import { fetcher } from "@/utils/utils";
 import { useEffect } from "react";
 import useSWR from "swr";
 
 export const DBIndexer = () => {
     const { data, error } = useSWR(
-        "http://localhost:3000/api/categories",
+        "http://localhost:3000/api/services",
         fetcher
     );
 
     useEffect(() => {
         if (data) {
             Object.entries(data).forEach(([key, value]) => {
-                saveDocumentToCache(key, value as CategoryWithServices);
+                saveServicesToCache(key, value as Service[]);
             });
         }
     }, [data]);
