@@ -11,9 +11,14 @@ export const DBIndexer = () => {
 
     useEffect(() => {
         if (data) {
-            Object.entries(data).forEach(([key, value]) => {
-                saveServicesToCache(key, value as Service).then(() => {
-                    console.log(`saved service with id: ${key} to db`);
+            Object.values(data).forEach((value) => {
+                saveServicesToCache(
+                    (value as Service).id.toString(),
+                    value as Service
+                ).then(() => {
+                    console.log(
+                        `saved service with id: ${(value as Service).id} to db`
+                    );
                 });
             });
         }
