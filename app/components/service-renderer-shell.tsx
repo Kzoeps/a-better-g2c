@@ -17,7 +17,6 @@ export default function ServiceRendererShell({
     htmlContent: string;
     serviceLink: string;
 }) {
-    console.log("service link", serviceLink);
     return (
         <div className="flex flex-col">
             <Suspense fallback={<div>Loading...</div>}>

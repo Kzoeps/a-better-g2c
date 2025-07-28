@@ -383,7 +383,6 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
 }) => {
     const [showOriginal, setShowOriginal] = useState(false);
     const parser = useMemo(() => new ServiceParser(), []);
-    console.log(serviceLink, "service link from parser");
 
     const parsedData = useMemo(() => {
         if (!htmlContent) return null;
@@ -576,31 +575,35 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
             </div>
         );
     };
-
     const renderLinks = (): React.ReactNode | null => {
-        if (!links.length) return null;
+        if (!links.length || !serviceLink) return null;
 
-        if (!serviceLink) return null;
         return (
-            <div className="p-4 border-b border-gray-100">
+            <div className="p-4 border-b border-gray-100 max-w-[250px]">
                 <div className="flex items-center mb-3">
                     <div className="p-2 rounded-lg bg-gray-100 mr-3">
                         <ExternalLink className="h-5 w-5 text-gray-600" />
                     </div>
                     <h3 className="font-semibold text-gray-900 text-md">
-                        Apply Online
+                        Related Links
                     </h3>
                 </div>
-                <div className="pl-10">
-                    <a
-                        href={serviceLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800"
-                    >
-                        Access Service
-                        <ExternalLink className="h-4 w-4 ml-1" />
-                    </a>
+                <div className="pl-10 space-y-2 min-w-0">
+                    {links.map((link) => (
+                        <div key={link} className="min-w-0">
+                            <a
+                                href={serviceLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 min-w-0 w-full"
+                            >
+                                <span className="truncate flex-1 min-w-0">
+                                    {link}
+                                </span>
+                                <ExternalLink className="h-4 w-4 ml-1 flex-shrink-0" />
+                            </a>
+                        </div>
+                    ))}
                 </div>
             </div>
         );
