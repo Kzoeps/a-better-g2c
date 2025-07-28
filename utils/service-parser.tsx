@@ -471,20 +471,21 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         const displayName = serviceName;
 
         return (
-            <div className="bg-white shadow-sm border-b border-gray-200 sticky top-16 z-10">
+            <div className="bg-white max-w-[100vw] md:max-w-md shadow-sm border-b border-gray-200 sticky top-16 z-10">
                 <div className="p-4">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <h1 className="text-xl font-bold text-gray-900">
+                    <div className="flex items-start justify-between gap-2">
+                        <div className="max-w-full min-w-0">
+                            <h1 className="text-xl font-bold text-gray-900 break-words leading-tight max-w-[calc(100vw-8rem)] overflow-hidden">
                                 {displayName}
                             </h1>
+
                             <p className="text-sm text-gray-600 mt-1">
                                 Government of Bhutan Digital Service
                             </p>
                         </div>
                         <button
                             onClick={toggleOriginal}
-                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="flex-shrink-0 inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                             {showOriginal ? (
                                 <>
