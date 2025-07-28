@@ -30,7 +30,9 @@ export default function ServiceRendererShell({ id }: { id: string }) {
     useEffect(() => {
         if (!serviceData && dataFromApi) {
             setServiceData(dataFromApi);
-            saveServicesToCache(id, dataFromApi);
+            saveServicesToCache(id, dataFromApi).then(() =>
+                console.log("saved to db")
+            );
         }
     }, [serviceData, dataFromApi, fetchingFromAPI, id]);
 
