@@ -1,11 +1,12 @@
 "use client";
 import { useCategoryContext } from "@/providers/CategoryContext";
-import { categoryIconMap } from "@/utils/categories-constants";
-import clsx from "clsx";
-import { ChevronDown, ChevronRight, Search } from "lucide-react";
-import Link from "next/link";
+import { Search } from "lucide-react";
 import React, { useState } from "react";
-import { ListingServiceCard } from "./listing-service-card";
+import { CategoryCard } from "./category-card";
+import {
+    FilteredServiceCard,
+    ListingServiceCard,
+} from "./listing-service-card";
 
 const AccordionNavigation = () => {
     const categoryMap = useCategoryContext();
@@ -74,116 +75,24 @@ const AccordionNavigation = () => {
                             </p>
                         </div>
                     ) : (
-                        filteredServices.map((service) => (
-                            <Link
-                                href={`/service/${service.id}`}
-                                key={service.id}
-                                className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 group"
-                            >
-                                <div className="flex items-center">
-                                    <div className="w-8 mr-3 flex justify-center">
-                                        <div className="w-2 h-2 bg-gray-300 rounded-full group-hover:bg-blue-400 transition-colors"></div>
-                                    </div>
-                                    <div className="flex-grow">
-                                        <div className="font-medium text-gray-900 text-sm">
-                                            {service.serviceName}
-                                        </div>
-                                    </div>
-                                    <ChevronRight
-                                        size={16}
-                                        className="text-gray-300 group-hover:text-gray-400 transition-colors"
-                                    />
-                                </div>
-                            </Link>
-                        ))
+                        <div className="px-4">
+                            {filteredServices.map((service) => (
+                                <ListingServiceCard
+                                    key={service.id}
+                                    service={service}
+                                />
+                            ))}
+                        </div>
                     )
                 ) : (
                     categories.map((category) => {
-                        const IconComponent = categoryIconMap.get(
-                            category.id
-                        )?.icon;
-                        const isExpanded = expandedCategory === category.id;
-                        const services = category.services || [];
-
                         return (
-                            <div
+                            <CategoryCard
                                 key={category.id}
-                                className="border-b border-gray-100 last:border-b-0"
-                            >
-                                {/* Category Header */}
-                                <button
-                                    onClick={() => toggleCategory(category.id)}
-                                    className="w-full p-4 text-left hover:bg-gray-50 transition-colors duration-200 focus:bg-gray-50 focus:outline-none"
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center flex-grow min-w-0">
-                                            <div
-                                                className={clsx(
-                                                    `p-2 rounded-lg mr-3 flex-shrink-0`,
-                                                    categoryIconMap.get(
-                                                        category.id
-                                                    )?.bgColor
-                                                )}
-                                            >
-                                                {IconComponent && (
-                                                    <IconComponent
-                                                        size={20}
-                                                        className={clsx(
-                                                            categoryIconMap.get(
-                                                                category.id
-                                                            )?.color
-                                                        )}
-                                                    />
-                                                )}
-                                            </div>
-                                            <div className="min-w-0 flex-grow">
-                                                <h3 className="font-semibold text-gray-900 text-sm mb-1">
-                                                    {category.categoryName}
-                                                </h3>
-                                                <p className="text-xs text-gray-600 leading-relaxed truncate">
-                                                    {
-                                                        category.categoryDescription
-                                                    }
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="ml-2 flex-shrink-0">
-                                            {isExpanded ? (
-                                                <ChevronDown
-                                                    size={20}
-                                                    className="text-gray-400 transition-transform duration-200"
-                                                />
-                                            ) : (
-                                                <ChevronRight
-                                                    size={20}
-                                                    className="text-gray-400 transition-transform duration-200"
-                                                />
-                                            )}
-                                        </div>
-                                    </div>
-                                </button>
-                                {/* Services */}
-                                {isExpanded && (
-                                    <div className="bg-gray-50 border-t border-gray-100">
-                                        <div className="px-4">
-                                            {services.length === 0 ? (
-                                                <div className="px-4 py-6 text-center">
-                                                    <p className="text-sm text-gray-500">
-                                                        No services available
-                                                    </p>
-                                                </div>
-                                            ) : (
-                                                services.map((service) => (
-                                                    <ListingServiceCard
-                                                        key={service.id}
-                                                        service={service}
-                                                    />
-                                                ))
-                                            )}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                                category={category}
+                                toggleCategory={toggleCategory}
+                                isExpanded={expandedCategory === category.id}
+                            />
                         );
                     })
                 )}
