@@ -1,8 +1,8 @@
-import { CategoryWithServices } from "@/providers/CategoryContext";
 import { categoryIconMap } from "@/utils/categories-constants";
 import clsx from "clsx";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { ListingServiceCard } from "./listing-service-card";
+import { CategoryWithServices } from "@/utils/types";
 
 export const CategoryCard = ({
     category,

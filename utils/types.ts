@@ -17,8 +17,12 @@ export type Service = {
     file: string | null;
 };
 
+export type ServiceWithoutDocument = Omit<Service, "serviceDocument"> & {
+    serviceDocument?: string; // Optional, since it may not be needed in some contexts
+};
+
 export type CategoryWithServices = Category & {
-    services: Omit<Service, "serviceDocument">[];
+    services: ServiceWithoutDocument[];
 };
 
 export type SubCategory = {
