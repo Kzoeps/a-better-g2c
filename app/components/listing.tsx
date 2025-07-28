@@ -1,73 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import { useCategoryContext } from "@/providers/CategoryContext";
+import { categoryIconMap } from "@/utils/categories-constants";
+import clsx from "clsx";
 import {
-    Search,
     ChevronDown,
     ChevronRight,
-    Users,
-    GraduationCap,
-    Heart,
-    DollarSign,
-    Home,
-    Shield,
-    Wheat,
-    Building2,
-    MapPin,
-    Plane,
-    Scale,
-    Banknote,
-    Car,
-    Calendar,
-    CreditCard,
-    TreePine,
-    Palette,
+    Search
 } from "lucide-react";
-import clsx from "clsx";
-import { useCategoryContext } from "@/providers/CategoryContext";
 import Link from "next/link";
+import React, { useState } from "react";
 
-const categoryIconMap = new Map<
-    number,
-    {
-        icon: React.ElementType;
-        color: string;
-        bgColor: string;
-    }
->([
-    [479, { icon: Users, color: "text-blue-600", bgColor: "bg-blue-50" }],
-    [
-        480,
-        {
-            icon: GraduationCap,
-            color: "text-green-600",
-            bgColor: "bg-green-50",
-        },
-    ],
-    [483, { icon: Heart, color: "text-red-600", bgColor: "bg-red-50" }],
-    [
-        484,
-        { icon: DollarSign, color: "text-yellow-600", bgColor: "bg-yellow-50" },
-    ],
-    [485, { icon: Home, color: "text-orange-600", bgColor: "bg-orange-50" }],
-    [486, { icon: Shield, color: "text-gray-600", bgColor: "bg-gray-50" }],
-    [487, { icon: Wheat, color: "text-emerald-600", bgColor: "bg-emerald-50" }],
-    [
-        488,
-        { icon: Building2, color: "text-purple-600", bgColor: "bg-purple-50" },
-    ],
-    [489, { icon: MapPin, color: "text-teal-600", bgColor: "bg-teal-50" }],
-    [490, { icon: Plane, color: "text-sky-600", bgColor: "bg-sky-50" }],
-    [491, { icon: Scale, color: "text-indigo-600", bgColor: "bg-indigo-50" }],
-    [492, { icon: Banknote, color: "text-rose-600", bgColor: "bg-rose-50" }],
-    [493, { icon: Car, color: "text-cyan-600", bgColor: "bg-cyan-50" }],
-    [494, { icon: Calendar, color: "text-pink-600", bgColor: "bg-pink-50" }],
-    [
-        548,
-        { icon: CreditCard, color: "text-violet-600", bgColor: "bg-violet-50" },
-    ],
-    [622, { icon: TreePine, color: "text-lime-600", bgColor: "bg-lime-50" }],
-    [627, { icon: Palette, color: "text-amber-600", bgColor: "bg-amber-50" }],
-]);
+
 
 const AccordionNavigation = () => {
     const categoryMap = useCategoryContext();
@@ -227,7 +170,7 @@ const AccordionNavigation = () => {
                                 {/* Services */}
                                 {isExpanded && (
                                     <div className="bg-gray-50 border-t border-gray-100">
-                                        <div className="py-2">
+                                        <div className="px-4">
                                             {services.length === 0 ? (
                                                 <div className="px-4 py-6 text-center">
                                                     <p className="text-sm text-gray-500">
