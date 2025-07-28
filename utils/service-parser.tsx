@@ -370,6 +370,7 @@ class ServiceParser {
 interface ServiceRendererProps {
     htmlContent: string;
     serviceName?: string;
+    serviceLink?: string;
     onGoBack?: () => void;
 }
 
@@ -377,10 +378,12 @@ interface ServiceRendererProps {
 const ServiceRenderer: React.FC<ServiceRendererProps> = ({
     htmlContent,
     serviceName = "Government Service",
+    serviceLink,
     onGoBack,
 }) => {
     const [showOriginal, setShowOriginal] = useState(false);
     const parser = useMemo(() => new ServiceParser(), []);
+    console.log(serviceLink, "service link from parser");
 
     const parsedData = useMemo(() => {
         if (!htmlContent) return null;
@@ -577,6 +580,7 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
     const renderLinks = (): React.ReactNode | null => {
         if (!links.length) return null;
 
+        if (!serviceLink) return null;
         return (
             <div className="p-4 border-b border-gray-100">
                 <div className="flex items-center mb-3">
@@ -588,20 +592,47 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
                     </h3>
                 </div>
                 <div className="pl-10">
-                    {links.map((link, idx) => (
-                        <a
-                            key={idx}
-                            href={link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800"
-                        >
-                            Access Service
-                            <ExternalLink className="h-4 w-4 ml-1" />
-                        </a>
-                    ))}
+                    <a
+                        href={serviceLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800"
+                    >
+                        Access Service
+                        <ExternalLink className="h-4 w-4 ml-1" />
+                    </a>
                 </div>
             </div>
+        );
+    };
+
+    const renderAccessService = (serviceLink?: string) => {
+        if (!serviceLink) return null;
+
+        return (
+            <Link
+                href={serviceLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+            >
+                <div className="p-4 hover:bg-gray-100 transition rounded-md border-b border-gray-100 cursor-pointer">
+                    <div className="flex items-center">
+                        <div className="p-2 rounded-lg bg-gray-100 mr-3">
+                            <ExternalLink className="h-5 w-5 text-gray-600" />
+                        </div>
+                        <div className="flex flex-col">
+                            <h3 className="text-md font-semibold text-gray-900">
+                                Access Service
+                            </h3>
+                            <span className="text-sm text-blue-600 hover:underline inline-flex items-center">
+                                Go to Service
+                                <ExternalLink className="h-4 w-4 ml-1" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </Link>
         );
     };
 
@@ -618,31 +649,7 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
         return (
             <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
                 {renderServiceName()}
-                {true && (
-                    <Link
-                        href={"/"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
-                    >
-                        <div className="p-4 hover:bg-gray-100 transition rounded-md border-b border-gray-100 cursor-pointer">
-                            <div className="flex items-center">
-                                <div className="p-2 rounded-lg bg-gray-100 mr-3">
-                                    <ExternalLink className="h-5 w-5 text-gray-600" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <h3 className="text-md font-semibold text-gray-900">
-                                        Access Service
-                                    </h3>
-                                    <span className="text-sm text-blue-600 hover:underline inline-flex items-center">
-                                        Go to Service
-                                        <ExternalLink className="h-4 w-4 ml-1" />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                )}
+                {renderAccessService(serviceLink)}
                 <Link href={"/"}>Go to service</Link>
                 <div className="p-6">
                     <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
@@ -655,32 +662,7 @@ const ServiceRenderer: React.FC<ServiceRendererProps> = ({
     return (
         <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
             {renderServiceName()}
-            {true && (
-                <Link
-                    href={"/"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                >
-                    <div className="p-4 hover:bg-gray-100 transition rounded-md border-b border-gray-100 cursor-pointer">
-                        <div className="flex items-center">
-                            <div className="p-2 rounded-lg bg-gray-100 mr-3">
-                                <ExternalLink className="h-5 w-5 text-gray-600" />
-                            </div>
-                            <div className="flex flex-col">
-                                <h3 className="text-md font-semibold text-gray-900">
-                                    Access Service
-                                </h3>
-                                <span className="text-sm text-blue-600 hover:underline inline-flex items-center">
-                                    Go to Service
-                                    <ExternalLink className="h-4 w-4 ml-1" />
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-            )}
-
+            {renderAccessService(serviceLink)}
             <div className="bg-white divide-y divide-gray-200">
                 {renderLinks()}
                 {renderContactCard()}

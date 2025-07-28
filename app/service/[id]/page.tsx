@@ -16,7 +16,7 @@ export default async function ServicePage({
     const service: Service | undefined = servicesData.find(
         (service: Service) => Number(service.id) === Number(id)
     );
-    console.log(service)
+    console.log(service);
     return (
         <div className="flex flex-col">
             <nav className="bg-gray-500 text-white sticky top-0 z-20">
@@ -36,6 +36,7 @@ export default async function ServicePage({
             </nav>
 
             <ServiceRendererShell
+                serviceLink={service?.serviceLink || ""}
                 serviceName={service?.serviceName || ""}
                 htmlContent={service?.serviceDocument || ""}
             />
