@@ -1205,7 +1205,7 @@ export const subcategories: SubCategory[] = [
     serviceDescription: "Application",
     serviceLink:
       "https://www.citizenservices.gov.bt/DAHE/scholApplication.do?requestType=adhoc",
-    serviceDocument: null,
+    serviceDocument: undefined,
     category: "480",
     image: "dahe.jpg",
     file: null,
