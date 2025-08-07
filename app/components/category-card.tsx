@@ -43,9 +43,9 @@ export const CategoryCard = ({
                             )}
                         </div>
                         <div className="min-w-0 flex-grow">
-                            <h3 className="font-semibold text-gray-900 text-sm mb-1">
+                            <h2 className="font-semibold text-gray-900 text-sm mb-1">
                                 {category.categoryName}
-                            </h3>
+                            </h2>
                             <p className="text-xs text-gray-600 leading-relaxed truncate">
                                 {category.categoryDescription}
                             </p>

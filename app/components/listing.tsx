@@ -76,9 +76,9 @@ const AccordionNavigation = () => {
                             <div className="text-gray-400 mb-2">
                                 <Search size={48} className="mx-auto" />
                             </div>
-                            <h3 className="text-lg font-medium text-gray-900 mb-1">
+                            <h2 className="text-lg font-medium text-gray-900 mb-1">
                                 No services found
-                            </h3>
+                            </h2>
                             <p className="text-sm text-gray-600">
                                 Try searching with different keywords
                             </p>
