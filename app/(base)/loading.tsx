@@ -1,7 +1,7 @@
 import {
     CategoryCardSkeleton,
     ServicesHeaderSkeleton,
-} from "./components/listing-skeletons";
+} from "../components/listing-skeletons";
 
 export default function ListingLoading() {
     return (

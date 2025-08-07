@@ -3,7 +3,7 @@ import {
     getCategoriesWithServices,
     mapCategoriesWithServices,
 } from "@/utils/utils";
-import Listing from "./components/listing";
+import Listing from "../components/listing";
 import { CATEGORIES } from "@/utils/categories-constants";
 import { SERVICES } from "@/utils/subcategories-constants";
 

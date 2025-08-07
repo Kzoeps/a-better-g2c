@@ -2,12 +2,16 @@ import { Service, ServiceWithoutDocument } from "@/utils/types";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-export const ListingServiceCard = ({ service }: { service: ServiceWithoutDocument }) => {
+export const ListingServiceCard = ({
+    service,
+}: {
+    service: ServiceWithoutDocument;
+}) => {
     return (
         <Link
             href={`/service/${service.id}`}
             key={service.id}
-            className="w-full px-4 py-3 text-left hover:bg-white transition-colors duration-200 group"
+            className="w-full px-4 py-3 text-left transition-colors duration-200 group"
         >
             <div className="flex items-center">
                 <div className="w-8 mr-3 flex flex-shrink-0 justify-center">
