@@ -6,6 +6,7 @@ import {
 import Listing from "../components/listing";
 import { CATEGORIES } from "@/utils/categories-constants";
 import { SERVICES } from "@/utils/subcategories-constants";
+import Footer from "../components/footer";
 
 export default async function Home() {
     let mappedData;
@@ -15,12 +16,14 @@ export default async function Home() {
         mappedData = mapCategoriesWithServices(CATEGORIES, SERVICES);
     }
 
-
     return (
-        <div>
-            <CategoryProvider value={mappedData}>
-                <Listing />
-            </CategoryProvider>
-        </div>
+        <>
+            <main>
+                <CategoryProvider value={mappedData}>
+                    <Listing />
+                </CategoryProvider>
+            </main>
+            <Footer />
+        </>
     );
 }

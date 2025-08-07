@@ -96,12 +96,16 @@ const AccordionNavigation = () => {
                 ) : (
                     categories.map((category) => {
                         return (
-                            <CategoryCard
-                                key={category.id}
-                                category={category}
-                                toggleCategory={toggleCategory}
-                                isExpanded={expandedCategory === category.id}
-                            />
+                            <div key={category.id} className="last:mb-[50px]">
+                                <CategoryCard
+                                    key={category.id}
+                                    category={category}
+                                    toggleCategory={toggleCategory}
+                                    isExpanded={
+                                        expandedCategory === category.id
+                                    }
+                                />
+                            </div>
                         );
                     })
                 )}
